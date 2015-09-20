@@ -21,6 +21,15 @@ void error(char *msg){
   exit(0);
 }
 
+// This process/modify the text that has been sent from the client and server process the text
+void modifierText(char *txt){
+  char *p = txt; 
+  while(*p != '\0'){
+    *p = toupper(*p);
+    p++;
+  }
+}
+
 int main(int argc, char *argv[]){
   int sock, length, msgsock, status;
   struct sockaddr_in server;
@@ -83,6 +92,8 @@ int main(int argc, char *argv[]){
       if(readServer < 0){
         error("Error cannot read into the buffer\n");
       }
+
+      modifierText(buf);
 
       int writeServer = write(newsock, buf, bufsize);
       if(readServer < 0){
